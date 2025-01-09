@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import { GrClose } from "react-icons/gr";
-import Axios from "axios";
+import axios from "axios";
 import ModalWindowsContext from "../../Contexts/ModalWindowsContext";
 
 export default function Login() {
@@ -11,14 +11,22 @@ export default function Login() {
 
   const { setLoginOpen, setIsAuthenticated } = useContext(ModalWindowsContext);
 
-  const checkUser = async () => {
+  const checkUser = async (event) => {
+    event.preventDefault();
+
     try {
-      const response = await Axios.post("http://localhost:3000/login", {
+      const response = await axios.post("http://localhost:3000/login", {
         email,
         password,
       });
+      if (response.status === 200 || response.data.success) {
+        setIsAuthenticated(true);
+        setLoginOpen(false);
+      } else {
+        console.error("Authorization failed: ", response.data.message);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error during login request");
     }
   };
 

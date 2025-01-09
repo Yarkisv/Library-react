@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 import "./Register.css";
 import { GrClose } from "react-icons/gr";
 import ModalWindowsContext from "../../Contexts/ModalWindowsContext";
@@ -14,9 +14,11 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const insertUser = async () => {
+  const insertUser = async (event) => {
+    event.preventDefault();
+
     try {
-      await Axios.post("http://localhost:3000/register", {
+      const response = await axios.post("http://localhost:3000/register", {
         email,
         userName,
         password,
@@ -26,8 +28,16 @@ export default function Register() {
       setUserName("");
       setPassword("");
       setRole("");
+
+      if (response.status === 200 || response.data.success) {
+        setIsAuthenticated(true);
+        setRegisterOpen(false);
+        console.log("Registration successful!");
+      } else {
+        console.error("Registation failed: ", response.data.message);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error during register request");
     }
   };
 

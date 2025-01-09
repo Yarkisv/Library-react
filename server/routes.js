@@ -6,13 +6,13 @@ const { insertUser, checkUser } = require("./db_functions");
 router.post("/register", (req, res) => {
   const { email, userName, password, role } = req.body;
 
-  insertUser(email, userName, password, role);
+  insertUser(email, userName, password, role, res);
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  checkUser(email, password, res);
+  checkUser(email, password, res);  
 });
 
 module.exports = router;

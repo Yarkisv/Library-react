@@ -6,32 +6,32 @@ import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ModalWindowsContext from "./Contexts/ModalWindowsContext";
 
-const router = createBrowserRouter([
-  {
-    path: "/home",
-    element: (
-      <div>
-        <MainPage />
-      </div>
-    ),
-  },
-  {
-    path: "/contacts",
-    element: (
-      <div>
-        <Login />
-      </div>
-    ),
-  },
-  {
-    path: "/about",
-    element: (
-      <div>
-        <Register />
-      </div>
-    ),
-  },
-]);
+// const router = createBrowserRouter([
+//   {
+//     path: "/home",
+//     element: (
+//       <div>
+//         <MainPage />
+//       </div>
+//     ),
+//   },
+//   {
+//     path: "/contacts",
+//     element: (
+//       <div>
+//         <Login />
+//       </div>
+//     ),
+//   },
+//   {
+//     path: "/about",
+//     element: (
+//       <div>
+//         <Register />
+//       </div>
+//     ),
+//   },
+// ]);
 
 function App() {
   const [isLoginOpen, setLoginOpen] = useState(false)
