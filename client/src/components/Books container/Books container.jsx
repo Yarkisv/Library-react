@@ -1,8 +1,11 @@
 import React from "react";
-import "./books container.css";
+import Books from "../Books/Books";
+import './Books container.css'
 
-export default class BooksContainer extends React.Component {
-  render() {
-    return <div className="books-container">{this.props.children}</div>;
-  }
-}
+export default function BooksContainer () {
+  return (
+    <div className="books-container">
+      <Books></Books>
+    </div>
+  );
+};

@@ -4,9 +4,9 @@ const insertUser = (email, username, password, role, res) => {
   const query =
     "INSERT INTO users (email, username, password, user_role) VALUES (?,?,?,?)";
 
-  // if (!email || !username || !password || !role) {
-  //   res.status(401).send({ success: false, message: "Invalid data" });
-  // }
+  if (!email || !username || !password || !role) {
+    res.status(401).send({ success: false, message: "Invalid data" });
+  }
 
   connection.query(query, [email, username, password, role], (err, result) => {
     if (err) {
@@ -16,7 +16,9 @@ const insertUser = (email, username, password, role, res) => {
       console.log(
         `User Inserted | email: ${email} | username: ${username} | password: ${password} | role: ${role}`
       );
-      res.status(200).send({ success: true, message: "Registration successful!" });
+      res
+        .status(200)
+        .send({ success: true, message: "Registration successful!" });
     }
   });
 };
@@ -43,7 +45,21 @@ const checkUser = (email, password, res) => {
   });
 };
 
+const getAllbooksFromDb = (res) => {
+  const query = "SELECT * FROM books";
+
+  connection.query(query, (err, result) => {
+    if (err) {
+      console.error("Database error: ", err);
+      res.status(500).send({ success: false, message: "Database error" });
+    } else {
+      res.status(200).send({data: result})
+    }
+  });
+};
+
 module.exports = {
   insertUser,
   checkUser,
+  getAllbooksFromDb
 };

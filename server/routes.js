@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { insertUser, checkUser } = require("./db_functions");
+const { insertUser, checkUser, getAllbooksFromDb } = require("./db_functions");
+
+router.get("/", (req, res) => {
+  getAllbooksFromDb(res)
+});
 
 router.post("/register", (req, res) => {
   const { email, userName, password, role } = req.body;
@@ -12,7 +16,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  checkUser(email, password, res);  
+  checkUser(email, password, res);
 });
 
 module.exports = router;
