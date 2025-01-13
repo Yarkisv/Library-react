@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./books.css";
 import axios from "axios";
 
 export default function Books() {
   const [book, setBook] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getAllBooks = async () => {
@@ -18,23 +20,19 @@ export default function Books() {
     getAllBooks();
   }, []);
 
+  const navigateToBook = (id) => {
+    navigate(`/book/${id}`)
+  }
+
   return (
     <div className="books">
       {book.map((book) => (
-        <div className="book-card" key={book.id}>
+        <div className="book-card" key={book.id} onClick={() => navigateToBook(book.id)}>
           <h3>{book.title}</h3>
-          <p>
-            {book.author}
-          </p>
-          <p>
-            {book.published_year}
-          </p>
-          <p>
-            {book.genre}
-          </p>
-          <p>
-            {book.status}
-          </p>
+          <p>{book.author}</p>
+          <p>{book.published_year}</p>
+          <p>{book.genre}</p>
+          <p>{book.available}</p>
         </div>
       ))}
     </div>

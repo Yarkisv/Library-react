@@ -1,10 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
-const { insertUser, checkUser, getAllbooksFromDb } = require("./db_functions");
+const {
+  insertUser,
+  checkUser,
+  getAllbooksFromDb,
+  getOneSpresialBook,
+} = require("./db_functions");
 
 router.get("/", (req, res) => {
-  getAllbooksFromDb(res)
+  getAllbooksFromDb(res);
+});
+
+router.get("/book/:id", (req, res) => {
+  const id = req.params.id
+
+  getOneSpresialBook(res, id)
 });
 
 router.post("/register", (req, res) => {

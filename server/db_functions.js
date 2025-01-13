@@ -53,7 +53,24 @@ const getAllbooksFromDb = (res) => {
       console.error("Database error: ", err);
       res.status(500).send({ success: false, message: "Database error" });
     } else {
-      res.status(200).send({data: result})
+      res.status(200).send({ data: result });
+    }
+  });
+};
+
+const getOneSpresialBook = (res, id) => {
+  const query = "SELECT * FROM books WHERE id = ?";
+
+  connection.query(query, [id], (err, result) => {
+    if (err) {
+      console.error("Database error: ", err);
+      res.status(500).send({success: false, message: "Server error"})
+    } else if (result.length === 0) {
+      console.log(`Book with { id: [${id}]} does not exist!`)
+      res.status(404).send({ success: false, message: "Book not found" });
+    } else {
+      console.log(`Book with { id: [${id}]} exists!`)
+      res.status(200).send({ data: result, success: true, message: "Book exist"});
     }
   });
 };
@@ -61,5 +78,6 @@ const getAllbooksFromDb = (res) => {
 module.exports = {
   insertUser,
   checkUser,
-  getAllbooksFromDb
+  getAllbooksFromDb,
+  getOneSpresialBook,
 };

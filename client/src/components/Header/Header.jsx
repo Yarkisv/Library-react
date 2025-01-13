@@ -12,10 +12,10 @@ export default function Header() {
       <div className="header-content">
         <h1>Welcome to the Books Page</h1>
         <nav className="nav-links">
-          {/* <Link to="/home" className="home">
+          <Link to="/home" className="home">
             Home
           </Link>
-          <Link to="/contacts" className="contacts">
+          {/* <Link to="/contacts" className="contacts">
             Contacts
           </Link>
           <Link to="/about" className="about">
