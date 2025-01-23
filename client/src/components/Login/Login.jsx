@@ -53,7 +53,7 @@ export default function Login() {
                 required
               />
             </div>
-            <div class="input-group">
+            <div className="input-group">
               <label>Password</label>
               <input
                 type="password"

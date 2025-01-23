@@ -19,9 +19,9 @@ router.get("/book/:id", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-  const { email, userName, password, role } = req.body;
+  const { email, userName, password } = req.body;
 
-  insertUser(email, userName, password, role, res);
+  insertUser(email, userName, password, res);
 });
 
 router.post("/login", (req, res) => {

@@ -1,20 +1,20 @@
 const connection = require("./db_config");
 
-const insertUser = (email, username, password, role, res) => {
+const insertUser = (email, username, password, res) => {
   const query =
-    "INSERT INTO users (email, username, password, user_role) VALUES (?,?,?,?)";
+    "INSERT INTO users (email, username, password) VALUES (?,?,?)";
 
-  if (!email || !username || !password || !role) {
+  if (!email || !username || !password) {
     res.status(401).send({ success: false, message: "Invalid data" });
   }
 
-  connection.query(query, [email, username, password, role], (err, result) => {
+  connection.query(query, [email, username, password], (err, result) => {
     if (err) {
       console.error("Database error:", err.message);
       res.status(500).send({ success: false, message: "Server error" });
     } else {
       console.log(
-        `User Inserted | email: ${email} | username: ${username} | password: ${password} | role: ${role}`
+        `User Inserted | email: ${email} | username: ${username} | password: ${password}`
       );
       res
         .status(200)

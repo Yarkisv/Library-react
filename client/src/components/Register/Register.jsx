@@ -12,7 +12,6 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
 
   const insertUser = async (event) => {
     event.preventDefault();
@@ -21,13 +20,11 @@ export default function Register() {
       const response = await axios.post("http://localhost:3000/register", {
         email,
         userName,
-        password,
-        role,
+        password
       });
       setEmail("");
       setUserName("");
       setPassword("");
-      setRole("");
 
       if (response.status === 200 || response.data.success) {
         setIsAuthenticated(true);
@@ -47,7 +44,10 @@ export default function Register() {
         <div className="register">
           <button
             className="modal-close-button"
-            onClick={() => setRegisterOpen(false)}
+            onClick={() => {
+              setRegisterOpen(false);
+              console.log("Register is clicked");
+            }}
           >
             <GrClose />
           </button>
@@ -75,7 +75,7 @@ export default function Register() {
                 required
               />
             </div>
-            <div class="input-group">
+            <div className="input-group">
               <label>Password</label>
               <input
                 type="text"
@@ -86,17 +86,7 @@ export default function Register() {
                 required
               />
             </div>
-            <div class="input-group">
-              <label>Role</label>
-              <input
-                type="text"
-                id="role"
-                name="role"
-                value={role}
-                onChange={(event) => setRole(event.target.value)}
-                required
-              />
-            </div>
+            
             <button type="submit" className="sign-in-button">
               Register
             </button>

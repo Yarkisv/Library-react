@@ -1,37 +1,30 @@
 import "./App.css";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import MainPage from "./components/Main page/Main page";
+import MainPage from "./pages/MainPage";
 import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ModalWindowsContext from "./Contexts/ModalWindowsContext";
-import BookPage from "./components/Book page/Book page";
+import BookPage from "./pages/BookPage";
+import AboutPage from "./pages/AboutPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <div>
-        <MainPage />
-      </div>
-    )
+    element: <MainPage />,
   },
   {
     path: "/home",
-    element: (
-      <div>
-        <MainPage />
-      </div>
-    )
+    element: <MainPage />,
+  },
+  {
+    path: "/about",
+    element: <AboutPage />,
   },
   {
     path: "/book/:id",
-    element: (
-      <div>
-        <BookPage/>
-      </div>
-    )
-  }
+    element: <BookPage />,
+  },
 ]);
 
 function App() {
@@ -50,13 +43,10 @@ function App() {
 
   return (
     <ModalWindowsContext.Provider value={authValues}>
-      <RouterProvider router={router}>
-        <div>
-          <MainPage />
-          {isLoginOpen && <Login />}
-          {isRegisterOpen && <Register />}
-        </div>
-      </RouterProvider>
+      <RouterProvider router={router} />
+
+      {isLoginOpen && <Login />}
+      {isRegisterOpen && <Register />}
     </ModalWindowsContext.Provider>
   );
 }

@@ -17,10 +17,10 @@ export default function Header() {
           </Link>
           {/* <Link to="/contacts" className="contacts">
             Contacts
-          </Link>
+          </Link> */}
           <Link to="/about" className="about">
             About
-          </Link> */}
+          </Link>
         </nav>
 
         {!isAuthenticated ? (

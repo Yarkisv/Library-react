@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Header/Header";
+import Header from "../components/Header/Header";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -12,7 +12,7 @@ export default function BookPage() {
       try {
         const response = await axios.get(`http://localhost:3000/book/${id}`);
         setBook(response.data.data[0]);
-        console.log(response.message);
+        console.log(response.data.message);
       } catch (error) {}
     };
 
