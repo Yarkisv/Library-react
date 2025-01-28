@@ -1,83 +1,115 @@
 const connection = require("./db_config");
+const User = require("./models/user_model");
 
-const insertUser = (email, username, password, res) => {
-  const query =
-    "INSERT INTO users (email, username, password) VALUES (?,?,?)";
+const insertUser = (req, res) => {
+  const query = "INSERT INTO users (email, username, password) VALUES (?,?,?)";
+  const newUser = new User(
+    req.body.email,
+    req.body.userName,
+    req.body.password
+  );
 
-  if (!email || !username || !password) {
+  if (!newUser.email || !newUser.username || !newUser.password) {
     res.status(401).send({ success: false, message: "Invalid data" });
   }
 
-  connection.query(query, [email, username, password], (err, result) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      res.status(500).send({ success: false, message: "Server error" });
-    } else {
-      console.log(
-        `User Inserted | email: ${email} | username: ${username} | password: ${password}`
-      );
-      res
-        .status(200)
-        .send({ success: true, message: "Registration successful!" });
-    }
-  });
+  try {
+    connection.query(
+      query,
+      [newUser.email, newUser.username, newUser.password],
+      (err, result) => {
+        if (err) {
+          console.error("Database error:", err.message);
+          res.status(500).send({ success: false, message: "Server error" });
+        } else {
+          console.log(
+            `User Inserted | email: ${newUser.email} | username: ${newUser.username} | password: ${newUser.password}`
+          );
+          res
+            .status(200)
+            .send({ success: true, message: "Registration successful!" });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-const checkUser = (email, password, res) => {
+const checkUser = (req, res) => {
   const query = "SELECT * FROM users WHERE email = ? AND password = ?";
 
-  connection.query(query, [email, password], (err, result) => {
-    if (err) {
-      console.error(
-        `Error checking user with { email: [${email}] password: [${password}] }`,
-        err.message
-      );
-      res.status(500).send({ success: false, message: "Server error" });
-    } else if (result.length === 0) {
-      console.log(`User with { email: ${email} } does not exist!`);
-      res
-        .status(401)
-        .send({ success: false, message: "Invalid email or password" });
-    } else {
-      console.log(`User with { email: ${email} } exists!`);
-      res.status(200).send({ success: true, message: "Login successful" });
-    }
-  });
+  const email = req.body.email;
+  const password = req.body.password;
+
+  try {
+    connection.query(query, [email, password], (err, result) => {
+      if (err) {
+        console.error(
+          `Error checking user with { email: [${email}] password: [${password}] }`,
+          err.message
+        );
+        res.status(500).send({ success: false, message: "Server error" });
+      } else if (result.length === 0) {
+        console.log(`User with { email: ${email} } does not exist!`);
+        res
+          .status(401)
+          .send({ success: false, message: "Invalid email or password" });
+      } else {
+        console.log(`User with { email: ${email} } exists!`);
+        res.status(200).send({ success: true, message: "Login successful" });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const getAllbooksFromDb = (res) => {
   const query = "SELECT * FROM books";
 
-  connection.query(query, (err, result) => {
-    if (err) {
-      console.error("Database error: ", err);
-      res.status(500).send({ success: false, message: "Database error" });
-    } else {
-      res.status(200).send({ data: result });
-    }
-  });
+  try {
+    connection.query(query, (err, result) => {
+      if (err) {
+        console.error("Database error: ", err);
+        res.status(500).send({ success: false, message: "Database error" });
+      } else {
+        res.status(200).send({ data: result });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-const getOneSpresialBook = (res, id) => {
-  const query = "SELECT * FROM books WHERE id = ?";
+const getBookByName = (req, res) => {
+  const query = "SELECT * FROM books WHERE title = ?";
 
-  connection.query(query, [id], (err, result) => {
-    if (err) {
-      console.error("Database error: ", err);
-      res.status(500).send({success: false, message: "Server error"})
-    } else if (result.length === 0) {
-      console.log(`Book with { id: [${id}]} does not exist!`)
-      res.status(404).send({ success: false, message: "Book not found" });
-    } else {
-      console.log(`Book with { id: [${id}]} exists!`)
-      res.status(200).send({ data: result, success: true, message: "Book exist"});
-    }
-  });
+  const title = req.params.title;
+
+  try {
+    connection.query(query, [title], (err, result) => {
+      if (err) {
+        console.error("Database error: ");
+        res.status(500).send({ success: false, message: "Server error" });
+      } else if (result.length === 0) {
+        console.log(`Book with { title: [${title}]} does not exist!`);
+        res.status(404).send({ success: false, message: "Book not found" });
+      } else {
+        console.log(`Book with { title: [${title}]} exists!`);
+        res
+          .status(200)
+          .send({ data: result, success: true, message: "Book exist" });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 module.exports = {
   insertUser,
   checkUser,
   getAllbooksFromDb,
-  getOneSpresialBook,
+  getBookByName,
 };

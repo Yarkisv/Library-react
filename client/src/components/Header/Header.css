@@ -9,12 +9,38 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
-.main-header h1 {
-  margin: 0;
-  color: black;
-  font-size: 24px;
+.input-group {
+  width: 800px;
+  position: relative;
+  display: flex;
+}
+
+.input-group input {
+  padding-right: 40px;
+  height: 40px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.input-group .search-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 18px;
+  color: #666;
+}
+
+.input-group .search-btn:hover {
+  color: #000;
 }
 
 .nav-links {

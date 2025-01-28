@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ModalWindowsContext from "./Contexts/ModalWindowsContext";
 import BookPage from "./pages/BookPage";
 import AboutPage from "./pages/AboutPage";
+import ContactsPage from "./pages/ContactsPage";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,11 @@ const router = createBrowserRouter([
     element: <AboutPage />,
   },
   {
-    path: "/book/:id",
+    path: "/contacts",
+    element: <ContactsPage />
+  },
+  {
+    path: "/book/:title",
     element: <BookPage />,
   },
 ]);

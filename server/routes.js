@@ -6,28 +6,23 @@ const {
   checkUser,
   getAllbooksFromDb,
   getOneSpresialBook,
+  getBookByName,
 } = require("./db_functions");
 
 router.get("/", (req, res) => {
   getAllbooksFromDb(res);
 });
 
-router.get("/book/:id", (req, res) => {
-  const id = req.params.id
-
-  getOneSpresialBook(res, id)
+router.get("/book/:title", (req, res) => {
+  getBookByName(req, res);
 });
 
 router.post("/register", (req, res) => {
-  const { email, userName, password } = req.body;
-
-  insertUser(email, userName, password, res);
+  insertUser(req, res);
 });
 
 router.post("/login", (req, res) => {
-  const { email, password } = req.body;
-
-  checkUser(email, password, res);
+  checkUser(req, res);
 });
 
 module.exports = router;

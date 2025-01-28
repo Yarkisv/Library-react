@@ -20,14 +20,14 @@ export default function Books() {
     getAllBooks();
   }, []);
 
-  const navigateToBook = (id) => {
-    navigate(`/book/${id}`)
+  const navigateToBook = (title) => {
+    navigate(`/book/${title}`)
   }
 
   return (
     <div className="books">
       {book.map((book) => (
-        <div className="book-card" key={book.id} onClick={() => navigateToBook(book.id)}>
+        <div className="book-card" key={book.id} onClick={() => navigateToBook(book.title)}>
           <h3>{book.title}</h3>
           <p>{book.author}</p>
           <p>{book.published_year}</p>

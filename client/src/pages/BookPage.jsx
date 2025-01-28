@@ -5,19 +5,37 @@ import { useParams } from "react-router-dom";
 
 export default function BookPage() {
   const [book, setBook] = useState([]);
-  const { id } = useParams();
+  const { title } = useParams();
+  // const { id } = useParams();
+
+  // useEffect(() => {
+  //   const fetchBook = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:3000/book/${id}`);
+  //       setBook(response.data.data[0]);
+  //       console.log(response.data.message);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   fetchBook();
+  // }, [id]);
 
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/book/${id}`);
+        const response = await axios.get(
+          `http://localhost:3000/book/${title}`
+        );
         setBook(response.data.data[0]);
-        console.log(response.data.message);
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     fetchBook();
-  }, [id]);
+  }, [title]);
 
   return (
     <div className="book-page">
